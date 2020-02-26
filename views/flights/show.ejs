@@ -1,0 +1,136 @@
+<%- include('partials/head-html')%>
+<body>
+    <%- include('partials/nav-bar')%>
+        <h1 class="centered-header">Flight <%=flight.flightNo%></h1>
+        <div id="body-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Airline</th>
+                        <th>Flight No.</th>
+                        <th>Departure Date</th>
+                        <th>Airport</th>
+                        <th>Destinations</th>
+                        <%if(tickets){%>
+                            <th>Tickets</th>
+                        <%}%>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                            <%if(flight.airline==='American'){%>
+                                <td id="american"></td>
+                            <%}else if(flight.airline==="United"){%>
+                                <td id="united"></td>
+                            
+                            <%}else{%>
+                                <td id="southwest"></td>
+    
+                         
+                            <%}%>
+                            <td><a href="/flights/<%=flight._id%>"><%=flight.flightNo%></a></td>
+                            <%if(flight.departs < Date.now()){%>
+                                <td id="time-passed"><%=flight.departs.toDateString()%>&nbsp; at &nbsp;<%=flight.departs.toLocaleTimeString()%></td>
+                                <%}else{%>
+                                    <td id="time"><%=flight.departs.toDateString()%>&nbsp; at &nbsp;<%=flight.departs.toLocaleTimeString()%></td>    
+                                    
+                                    <%}%>
+                                    <td><%=flight.airport%></td> 
+                                    <td>   
+                                    <%flight.destinations.forEach(dest=>{%>
+                                        <%=dest.airport%> at <%=dest.arrival.toDateString()%> <br>
+                                    
+                                    <%})%>
+                                    </td>
+                                    <%if(tickets){%>
+                                        <td class="tickets-td">
+                                            <%tickets.forEach(ticket=>{%>
+                                               <span>
+
+                                                   <%=ticket.seat%> - 
+                                                   <%=ticket.price%>
+                                                   <form action="/flights/:id/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
+                                                        <button type="submit">X</button>
+                                                    </form>
+                                                </span>
+                                                <br>
+                                                <%})%>
+                                            </td>
+                                            <%}%>
+                                            
+                                            <td>
+                                                
+                                                
+                                                <a href="/flights/<%=flight._id%>/edit"><button class="edit-button">Edit</button></a>
+                                                <form action="/flights/<%=flight._id%>?_method=DELETE" method ="POST">
+                                                    <button class="delete-button"type="submit="delete-button">Delete</button>
+                                                </form>
+                                                
+                                            </td>
+                                </tr>
+                                
+                                
+                               
+                            </tbody>
+                        </table>
+
+    <span>
+        <label> Add Destination </label>
+        <form action="/flights/<%=flight._id%>/destinations" method="POST">
+            <input type="datetime-local"  name="arrival">
+            <select name="airport">  
+
+
+
+            <% let current = [];
+                let airports = ['DIA','ATX','LAX','SAN','SEA','AUS']
+            flight.destinations.forEach(dest=>{
+                if(airports.includes(dest.airport)){
+                    current.push(dest.airport)
+                }
+
+                
+
+
+            })%>
+            <%if(flight.airport ==='DIA'||current.includes('DIA')){%>
+
+            <%}else{%>
+                <option value="DIA">DIA</option>
+            <%}%>
+            <%if(flight.airport ==='ATX'||current.includes('ATX')){%>
+                
+            <%}else{%>
+                <option value="ATX">ATX</option>
+            <%}%>
+            <%if(flight.airport ==='LAX'||current.includes('LAX')){%>
+                
+            <%}else{%>
+                <option value="LAX">LAX</option>
+            <%}%>
+            <%if(flight.airport ==='SAN'||current.includes('SAN')){%>
+                
+            <%}else{%>
+                <option value="SAN" selected>SAN</option>
+            <%}%>
+            <%if(flight.airport ==='SEA'||current.includes('SEA')){%>
+                
+            <%}else{%>
+                <option value="SEA">SEA</option>
+            <%}%>
+            <%if(flight.airport ==='AUS'||current.includes('AUS')){%>
+                
+            <%}else{%>
+                <option value="AUS">AUS</option>
+            <%}%>
+            
+            </select>
+            
+            <button type="submit">Add</button>
+            <a href="/flights/<%=flight._id%>/tickets/new">Add Ticket</a>
+        </form>
+    </span>                        
+    </div>
+    </body>
+</html>

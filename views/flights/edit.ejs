@@ -1,0 +1,32 @@
+<%- include('partials/head-html')%>
+<body>
+    <%- include('partials/nav-bar')%>
+        <h1 class="centered-header">Add A Flight</h1>
+        <div id="body-container">
+        <div class="centered-wrapper">
+            <form action="/flights/<%=flight._id%>/?_method=PUT" method="POST" id="new-flight-form">
+                <label class="input-label" >Airline</label>
+                <br>
+                <input type="text" name="airline" id="input-pretty" value="<%=flight.airline%>"placeholder="Amer../Sw.../United">
+                <br>
+                <label class="input-label">Flight Number</label>
+                <br>
+                <input type="text" name="flightNo" id="input-pretty" value="<%=flight.flightNo%>"placeholder="Flight No">
+                <br>
+                <label class="input-label" >Departure Date</label>
+                <br>
+                <input type="datetime-local" id="input-pretty" value="<%=flight.departs%>" name="departs">
+                <label for="date-time" class="dep-time">Current: <%=flight.departs.toDateString()%>&nbsp; at &nbsp;<%=flight.departs.toLocaleTimeString()%></label>
+                <br>
+                <button type="submit" class="submit">Save Changes</button>
+                <div class="display-error"><h1><%=error%></h1></div>
+                
+            </form>
+            
+            
+            
+        </div>
+        
+    </div>
+    </body>
+</html>

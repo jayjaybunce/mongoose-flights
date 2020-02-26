@@ -1,0 +1,87 @@
+<%- include('../flights/partials/head-html')%>
+<body>
+    <%- include('../flights/partials/nav-bar')%>
+        <h1 class="centered-header">Add Ticket</h1>
+        <div id="body-container">
+        <div claass="centered-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Airline</th>
+                        <th>Flight No.</th>
+                        <th>Departure Date</th>
+                        <th>Airport</th>
+                        <th>Destinations</th>
+                        <%if(tickets){%>
+                            <th>Tickets</th>
+                        <%}%>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <%if(flight.airline==='American'){%>
+                                <td id="american"></td>
+                            <%}else if(flight.airline==="United"){%>
+                                <td id="united"></td>
+                            
+                            <%}else{%>
+                                <td id="southwest"></td>
+    
+                         
+                            <%}%>
+                            <td><a href="/flights/<%=flight._id%>"><%=flight.flightNo%></a></td>
+                            <%if(flight.departs < Date.now()){%>
+                                <td id="time-passed"><%=flight.departs.toDateString()%>&nbsp; at &nbsp;<%=flight.departs.toLocaleTimeString()%></td>
+                                <%}else{%>
+                                    <td id="time"><%=flight.departs.toDateString()%>&nbsp; at &nbsp;<%=flight.departs.toLocaleTimeString()%></td>    
+                                    
+                                    <%}%>
+                                    <td><%=flight.airport%></td> 
+                                    <td>   
+                                    <%flight.destinations.forEach(dest=>{%>
+                                        <%=dest.airport%> at <%=dest.arrival.toDateString()%> <br>
+                                    
+                                    <%})%>
+                                    </td>
+                                    <%if(tickets){%>
+                                        <td>
+                                            <%tickets.forEach(ticket=>{%>
+                                                <%=ticket.seat%> - 
+                                                <%=ticket.price%>
+                                                <%})%>
+                                            </td>
+                                            <%}%>
+                                            
+                                            <td>
+                                                
+                                                
+                                                <a href="/flights/<%=flight._id%>/edit"><button class="edit-button">Edit</button></a>
+                                                <form action="/flights/<%=flight._id%>/?_method=DELETE" method ="POST">
+                                                    <button class="delete-button"type="submit="delete-button">Delete</button>
+                                                </form>
+                                            </td>
+                                </tr>
+                                
+                                
+                               
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+            <form action="/flights/<%=flight._id%>/tickets" class="ticket-form"method="POST">
+                <label for="price">Price</label>
+                <input type="text" name="price">
+                <label for="seat">Seat</label>
+                <input type="text" name="seat" placeholder="A1-F99" required pattern="[A-F][1-9]\d?">
+                <button type="submit">Add Ticket</button>
+            </form>
+            
+        </div>
+        
+    </div>
+    </body>
+</html>

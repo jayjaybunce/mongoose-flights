@@ -1,0 +1,75 @@
+<%- include('partials/head-html')%>
+<body>
+    <%- include('partials/nav-bar')%>
+        <h1 class="centered-header">Add A Flight</h1>
+        <div id="body-container">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        <div claass="centered-wrapper">
+            <form action="/flights" method="POST" id="new-flight-form">
+                <label class="input-label">Airline</label>
+                <br>
+                <input type="text" name="airline" id="input-pretty" placeholder="Amer../Sw.../United">
+                <br>
+                <label class="input-label">Flight Number</label>
+                <br>
+                <input type="text" name="flightNo" id="input-pretty" placeholder="Flight No">
+                <br>
+                <label class="input-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Departure Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Airport</label>
+                <br>
+                <span>
+                    <% let month = tempFlight.departs.getMonth() +1
+                        if(month.length=1){
+                            month = "0" +month.toString() 
+                        }
+                        let year = tempFlight.departs.getFullYear()
+                        let day = tempFlight.departs.getDate()
+                        let hours = tempFlight.departs.getHours()
+                        let minutes = tempFlight.departs.getMinutes()
+                        let seconds = tempFlight.departs.getSeconds()
+                        let milliseconds = tempFlight.departs.getMilliseconds()
+                        let date = `${year}-${month}-${day}T${hours}:${minutes}`
+
+                    %>
+                    <input type="datetime-local" id="input-pretty-short" name="departs" value=<%=date%>>
+                    <select name="airport" id="dest-pretty-short" name="airport">
+                        <option value="DIA">DIA</option>
+                        <option value="ATX">ATX</option>
+                        <option value="LAX">LAX</option>
+                        <option value="SAN" selected>SAN</option>
+                        <option value="SEA">SEA</option>
+                        <option value="AUS">AUS</option>
+                    </select>
+                </span>
+                
+                
+                
+                <br>
+       
+                <br>
+                <button type="submit" class="submit">Add This Flight</button>
+                <div class="display-error"><h1><%=error%></h1></div>
+                
+            </form>
+            
+            
+            
+        </div>
+        
+    </div>
+    </body>
+</html>
